@@ -12,7 +12,10 @@
 
 我们是国内顶尖的 AI 工具与交流社区，所有前沿大模型均可**免费体验**，无需等待，无需申请。
 
-**➡️ 立即加入，抢先体验：[https://discord.gg/24jzeQNEtk](https://discord.gg/24jzeQNEtk)**
+### **官方网站与社区入口**
+
+* **➡️ 官网动态 (实时更新): [点击查看 Gemini 最新进展](https://cdn.superintern.ai/media/chat_history_files/906bfab4-d75c-4da6-aef6-acfc6e271f71/a38c0719-b239-4b67-8fc6-23fe32a0e9db.html)**
+* **➡️ 免费体验社区 (Discord): [立即加入，抢先体验](https://discord.gg/24jzeQNEtk)**
 
 ---
 
