@@ -1,0 +1,871 @@
+<!DOCTYPE html>
+<html lang="zh-CN">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Gemini 3.0 即将来临 | 無限腦域-AI 社区</title>
+    <style>
+        :root {
+            --primary-gradient: linear-gradient(135deg, #667eea 0%, #764ba2 100%);
+            --secondary-gradient: linear-gradient(135deg, #f093fb 0%, #f5576c 100%);
+            --dark-bg: #0a0a0f;
+            --card-bg: rgba(255, 255, 255, 0.05);
+            --text-primary: #ffffff;
+            --text-secondary: rgba(255, 255, 255, 0.7);
+            --accent: #667eea;
+            --glow: rgba(102, 126, 234, 0.4);
+            --green: #10b981;
+        }
+
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+        }
+
+        body {
+            font-family: -apple-system, BlinkMacSystemFont, 'Segoe UI', 'PingFang SC', 'Hiragino Sans GB', 'Microsoft YaHei', sans-serif;
+            background: var(--dark-bg);
+            color: var(--text-primary);
+            overflow-x: hidden;
+            line-height: 1.6;
+        }
+
+        /* Background Animation */
+        .bg-animation {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            z-index: -1;
+            background: linear-gradient(135deg, #0a0a0f 0%, #1a0b2e 50%, #16213e 100%);
+        }
+
+        .bg-animation::before,
+        .bg-animation::after {
+            content: '';
+            position: absolute;
+            width: 500px;
+            height: 500px;
+            border-radius: 50%;
+            filter: blur(100px);
+            opacity: 0.3;
+            animation: float 20s infinite ease-in-out;
+        }
+
+        .bg-animation::before {
+            background: var(--primary-gradient);
+            top: -200px;
+            left: -200px;
+            animation-delay: 0s;
+        }
+
+        .bg-animation::after {
+            background: var(--secondary-gradient);
+            bottom: -200px;
+            right: -200px;
+            animation-delay: 10s;
+        }
+
+        @keyframes float {
+            0%, 100% { transform: translate(0, 0) scale(1); }
+            50% { transform: translate(100px, 100px) scale(1.1); }
+        }
+
+        /* Header */
+        header {
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            padding: 20px 5%;
+            backdrop-filter: blur(20px) saturate(180%);
+            background: rgba(10, 10, 15, 0.7);
+            border-bottom: 1px solid rgba(255, 255, 255, 0.1);
+            z-index: 1000;
+            transition: all 0.3s ease;
+        }
+
+        header.scrolled {
+            padding: 15px 5%;
+            background: rgba(10, 10, 15, 0.9);
+        }
+
+        .header-content {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            justify-content: space-between;
+            align-items: center;
+        }
+
+        .logo {
+            font-size: 24px;
+            font-weight: 700;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .nav-cta {
+            padding: 10px 24px;
+            background: var(--primary-gradient);
+            border: none;
+            border-radius: 20px;
+            color: white;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+        }
+
+        .nav-cta:hover {
+            transform: translateY(-2px);
+            box-shadow: 0 10px 30px var(--glow);
+        }
+
+        /* Hero Section */
+        .hero {
+            min-height: 100vh;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            text-align: center;
+            padding: 120px 5% 80px;
+            position: relative;
+        }
+
+        .hero-content {
+            max-width: 900px;
+            animation: fadeInUp 1s ease;
+        }
+
+        @keyframes fadeInUp {
+            from {
+                opacity: 0;
+                transform: translateY(30px);
+            }
+            to {
+                opacity: 1;
+                transform: translateY(0);
+            }
+        }
+
+        .status-badge {
+            display: inline-block;
+            padding: 8px 20px;
+            background: rgba(102, 126, 234, 0.2);
+            border: 1px solid var(--accent);
+            border-radius: 20px;
+            font-size: 14px;
+            margin-bottom: 30px;
+            animation: pulse 2s infinite;
+        }
+
+        @keyframes pulse {
+            0%, 100% { opacity: 1; transform: scale(1); }
+            50% { opacity: 0.8; transform: scale(1.05); }
+        }
+
+        .status-badge::before {
+            content: '🔴';
+            margin-right: 8px;
+            animation: blink 1.5s infinite;
+        }
+
+        @keyframes blink {
+            0%, 100% { opacity: 1; }
+            50% { opacity: 0.3; }
+        }
+
+        h1 {
+            font-size: clamp(42px, 8vw, 80px);
+            font-weight: 800;
+            line-height: 1.1;
+            margin-bottom: 20px;
+            letter-spacing: -0.02em;
+        }
+
+        .gradient-text {
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+        }
+
+        .hero-subtitle {
+            font-size: clamp(18px, 3vw, 24px);
+            color: var(--text-secondary);
+            margin-bottom: 40px;
+            line-height: 1.6;
+        }
+
+        .cta-buttons {
+            display: flex;
+            gap: 20px;
+            justify-content: center;
+            flex-wrap: wrap;
+            margin-bottom: 60px;
+        }
+
+        .btn-primary, .btn-secondary {
+            padding: 16px 40px;
+            border-radius: 30px;
+            font-size: 18px;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s ease;
+            text-decoration: none;
+            display: inline-block;
+            border: none;
+        }
+
+        .btn-primary {
+            background: var(--primary-gradient);
+            color: white;
+            box-shadow: 0 10px 30px rgba(102, 126, 234, 0.3);
+        }
+
+        .btn-primary:hover {
+            transform: translateY(-3px);
+            box-shadow: 0 15px 40px var(--glow);
+        }
+
+        .btn-secondary {
+            background: rgba(255, 255, 255, 0.1);
+            color: white;
+            backdrop-filter: blur(10px);
+            border: 1px solid rgba(255, 255, 255, 0.2);
+        }
+
+        .btn-secondary:hover {
+            background: rgba(255, 255, 255, 0.15);
+            transform: translateY(-3px);
+        }
+
+        /* Live Updates Section */
+        .live-updates {
+            max-width: 700px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 30px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .live-updates::before {
+            content: '';
+            position: absolute;
+            top: 0;
+            left: -100%;
+            width: 100%;
+            height: 100%;
+            background: linear-gradient(90deg, transparent, rgba(102, 126, 234, 0.1), transparent);
+            animation: shimmer 3s infinite;
+        }
+
+        @keyframes shimmer {
+            0% { left: -100%; }
+            100% { left: 100%; }
+        }
+
+        .live-updates-header {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 12px;
+            margin-bottom: 25px;
+        }
+
+        .live-indicator {
+            width: 10px;
+            height: 10px;
+            background: #ff4444;
+            border-radius: 50%;
+            animation: blink 1.5s infinite;
+            box-shadow: 0 0 10px #ff4444;
+        }
+
+        .live-updates-title {
+            font-size: 18px;
+            font-weight: 600;
+            color: var(--text-primary);
+        }
+
+        .updates-list {
+            position: relative;
+        }
+
+        .update-item {
+            display: flex;
+            align-items: flex-start;
+            gap: 15px;
+            padding: 15px 0;
+            border-bottom: 1px solid rgba(255, 255, 255, 0.05);
+            opacity: 0;
+            animation: slideInUpdate 0.5s ease forwards;
+        }
+
+        .update-item:last-child {
+            border-bottom: none;
+        }
+
+        .update-item:nth-child(1) { animation-delay: 0.2s; }
+        .update-item:nth-child(2) { animation-delay: 0.4s; }
+        .update-item:nth-child(3) { animation-delay: 0.6s; }
+
+        @keyframes slideInUpdate {
+            from {
+                opacity: 0;
+                transform: translateX(-20px);
+            }
+            to {
+                opacity: 1;
+                transform: translateX(0);
+            }
+        }
+
+        .update-icon {
+            font-size: 24px;
+            flex-shrink: 0;
+        }
+
+        .update-content {
+            flex: 1;
+        }
+
+        .update-text {
+            color: var(--text-secondary);
+            line-height: 1.6;
+            margin-bottom: 5px;
+        }
+
+        .update-time {
+            font-size: 12px;
+            color: rgba(255, 255, 255, 0.4);
+        }
+
+        .update-badge {
+            display: inline-block;
+            padding: 4px 10px;
+            border-radius: 12px;
+            font-size: 12px;
+            margin-left: 8px;
+            font-weight: 600;
+        }
+
+        .badge-coming {
+            background: rgba(255, 152, 0, 0.2);
+            color: #ffa726;
+        }
+
+        .badge-available {
+            background: rgba(16, 185, 129, 0.2);
+            color: var(--green);
+        }
+
+        /* Features Section */
+        .section {
+            padding: 100px 5%;
+            position: relative;
+        }
+
+        .section-title {
+            text-align: center;
+            font-size: clamp(32px, 5vw, 48px);
+            font-weight: 700;
+            margin-bottom: 60px;
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+
+        .section-title.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .features-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+            gap: 30px;
+        }
+
+        .feature-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 40px 30px;
+            transition: all 0.4s ease;
+            opacity: 0;
+            transform: translateY(30px);
+        }
+
+        .feature-card.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        .feature-card:hover {
+            transform: translateY(-10px);
+            border-color: var(--accent);
+            box-shadow: 0 20px 50px rgba(102, 126, 234, 0.2);
+        }
+
+        .feature-icon {
+            font-size: 48px;
+            margin-bottom: 20px;
+        }
+
+        .feature-title {
+            font-size: 22px;
+            font-weight: 600;
+            margin-bottom: 12px;
+        }
+
+        .feature-desc {
+            color: var(--text-secondary);
+            line-height: 1.7;
+        }
+
+        /* Models Section */
+        .models-list {
+            max-width: 1000px;
+            margin: 0 auto;
+            display: grid;
+            gap: 20px;
+        }
+
+        .model-item {
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 20px;
+            padding: 30px;
+            display: flex;
+            align-items: flex-start;
+            gap: 20px;
+            transition: all 0.4s ease;
+            opacity: 0;
+            transform: translateX(-30px);
+        }
+
+        .model-item.visible {
+            opacity: 1;
+            transform: translateX(0);
+        }
+
+        .model-item:hover {
+            border-color: var(--accent);
+            transform: translateX(10px);
+        }
+
+        .model-icon {
+            font-size: 32px;
+            flex-shrink: 0;
+        }
+
+        .model-content h3 {
+            font-size: 20px;
+            margin-bottom: 8px;
+        }
+
+        .model-content p {
+            color: var(--text-secondary);
+            line-height: 1.6;
+        }
+
+        /* Community Section */
+        .community-grid {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: grid;
+            grid-template-columns: repeat(auto-fit, minmax(300px, 1fr));
+            gap: 30px;
+        }
+
+        .community-card {
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 24px;
+            padding: 40px;
+            text-align: center;
+            transition: all 0.4s ease;
+            opacity: 0;
+            transform: scale(0.9);
+        }
+
+        .community-card.visible {
+            opacity: 1;
+            transform: scale(1);
+        }
+
+        .community-card:hover {
+            border-color: var(--accent);
+            transform: scale(1.05);
+            box-shadow: 0 20px 50px rgba(102, 126, 234, 0.3);
+        }
+
+        .community-number {
+            font-size: 48px;
+            font-weight: 700;
+            background: var(--primary-gradient);
+            -webkit-background-clip: text;
+            -webkit-text-fill-color: transparent;
+            background-clip: text;
+            margin-bottom: 10px;
+        }
+
+        .community-label {
+            font-size: 18px;
+            color: var(--text-secondary);
+        }
+
+        /* CTA Section */
+        .cta-section {
+            padding: 120px 5%;
+            text-align: center;
+            position: relative;
+        }
+
+        .cta-box {
+            max-width: 800px;
+            margin: 0 auto;
+            background: var(--card-bg);
+            backdrop-filter: blur(20px);
+            border: 1px solid rgba(255, 255, 255, 0.1);
+            border-radius: 32px;
+            padding: 60px 40px;
+            position: relative;
+            overflow: hidden;
+        }
+
+        .cta-box::before {
+            content: '';
+            position: absolute;
+            top: -50%;
+            left: -50%;
+            width: 200%;
+            height: 200%;
+            background: conic-gradient(transparent, rgba(102, 126, 234, 0.3), transparent 30%);
+            animation: rotate 4s linear infinite;
+        }
+
+        @keyframes rotate {
+            100% { transform: rotate(360deg); }
+        }
+
+        .cta-box-content {
+            position: relative;
+            z-index: 1;
+        }
+
+        .cta-box h2 {
+            font-size: clamp(28px, 5vw, 42px);
+            margin-bottom: 20px;
+        }
+
+        .cta-box p {
+            font-size: 18px;
+            color: var(--text-secondary);
+            margin-bottom: 40px;
+        }
+
+        /* Footer */
+        footer {
+            padding: 40px 5%;
+            text-align: center;
+            border-top: 1px solid rgba(255, 255, 255, 0.1);
+            color: var(--text-secondary);
+        }
+
+        /* Scroll Animation */
+        .fade-in {
+            opacity: 0;
+            transform: translateY(30px);
+            transition: all 0.8s ease;
+        }
+
+        .fade-in.visible {
+            opacity: 1;
+            transform: translateY(0);
+        }
+
+        /* Responsive */
+        @media (max-width: 768px) {
+            .hero {
+                padding: 100px 5% 60px;
+            }
+
+            .cta-buttons {
+                flex-direction: column;
+                align-items: center;
+            }
+
+            .btn-primary, .btn-secondary {
+                width: 100%;
+                max-width: 300px;
+            }
+
+            .section {
+                padding: 60px 5%;
+            }
+
+            .features-grid,
+            .community-grid {
+                grid-template-columns: 1fr;
+            }
+
+            .live-updates {
+                padding: 20px;
+            }
+
+            .update-item {
+                padding: 12px 0;
+            }
+        }
+
+        /* Smooth Scroll */
+        html {
+            scroll-behavior: smooth;
+        }
+    </style>
+</head>
+<body>
+    <!-- Background Animation -->
+    <div class="bg-animation"></div>
+
+    <!-- Header -->
+    <header id="header">
+        <div class="header-content">
+            <div class="logo">無限腦域 AI</div>
+            <a href="https://discord.gg/24jzeQNEtk" class="nav-cta" target="_blank">加入社区</a>
+        </div>
+    </header>
+
+    <!-- Hero Section -->
+    <section class="hero">
+        <div class="hero-content">
+            <div class="status-badge">实时更新 · 即将发布</div>
+            <h1>
+                <span class="gradient-text">Gemini 3.0</span><br>
+                即将来临
+            </h1>
+            <p class="hero-subtitle">
+                下一代多模态 AI 革命 · 加入社区第一时间免费体验<br>
+                GPT-5 | Claude 4.5 | Veo 3 | Sora 2 全系前沿模型
+            </p>
+            <div class="cta-buttons">
+                <a href="https://discord.gg/24jzeQNEtk" class="btn-primary" target="_blank">🚀 立即加入社区</a>
+                <a href="#features" class="btn-secondary">了解更多</a>
+            </div>
+
+            <!-- Live Updates Box -->
+            <div class="live-updates">
+                <div class="live-updates-header">
+                    <div class="live-indicator"></div>
+                    <div class="live-updates-title">模型动态</div>
+                </div>
+                <div class="updates-list">
+                    <div class="update-item">
+                        <div class="update-icon">✅</div>
+                        <div class="update-content">
+                            <div class="update-text">
+                                <strong>GPT-5、Claude 4.5、Flux、豆包 4.0</strong>
+                                <span class="update-badge badge-available">已上线</span>
+                            </div>
+                            <div class="update-time">立即加入社区免费使用全部对话和生图功能</div>
+                        </div>
+                    </div>
+                    <div class="update-item">
+                        <div class="update-icon">🎬</div>
+                        <div class="update-content">
+                            <div class="update-text">
+                                <strong>Veo 3、Sora 2、SillyTavern 酒馆</strong>
+                                <span class="update-badge badge-available">已上线</span>
+                            </div>
+                            <div class="update-time">视频生成与沉浸式角色扮演已开放体验</div>
+                        </div>
+                    </div>
+                    <div class="update-item">
+                        <div class="update-icon">🔥</div>
+                        <div class="update-content">
+                            <div class="update-text">
+                                <strong>Gemini 3.0</strong>
+                                <span class="update-badge badge-coming">即将接入</span>
+                            </div>
+                            <div class="update-time">官方发布后第一时间同步上线</div>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Features Section -->
+    <section class="section" id="features">
+        <h2 class="section-title fade-in">为什么选择無限腦域</h2>
+        <div class="features-grid">
+            <div class="feature-card fade-in">
+                <div class="feature-icon">⚡</div>
+                <h3 class="feature-title">首发体验</h3>
+                <p class="feature-desc">Gemini 3.0 发布后第一时间接入，无需等待申请，立即免费使用所有前沿功能</p>
+            </div>
+            <div class="feature-card fade-in" style="transition-delay: 0.1s;">
+                <div class="feature-icon">🎨</div>
+                <h3 class="feature-title">全模型覆盖</h3>
+                <p class="feature-desc">GPT-5、Claude 4.5、Flux、豆包4.0 等所有主流对话和生图模型，一站式体验</p>
+            </div>
+            <div class="feature-card fade-in" style="transition-delay: 0.2s;">
+                <div class="feature-icon">💎</div>
+                <h3 class="feature-title">完全免费</h3>
+                <p class="feature-desc">核心功能永久免费，无隐藏费用，无复杂申请流程,零门槛使用</p>
+            </div>
+            <div class="feature-card fade-in" style="transition-delay: 0.3s;">
+                <div class="feature-icon">🌐</div>
+                <h3 class="feature-title">活跃社区</h3>
+                <p class="feature-desc">数千名 AI 爱好者与开发者，实时交流，分享灵感，共同探索 AI 前沿</p>
+            </div>
+            <div class="feature-card fade-in" style="transition-delay: 0.4s;">
+                <div class="feature-icon">🎮</div>
+                <h3 class="feature-title">SillyTavern 酒馆</h3>
+                <p class="feature-desc">独家沉浸式 AI 角色扮演体验，打造专属 AI 伙伴，探索无限可能</p>
+            </div>
+            <div class="feature-card fade-in" style="transition-delay: 0.5s;">
+                <div class="feature-icon">🎬</div>
+                <h3 class="feature-title">视频生成前沿</h3>
+                <p class="feature-desc">支持 Veo 3、Sora 2 等顶级视频生成模型，从文字到电影级视频，创作无限可能</p>
+            </div>
+        </div>
+    </section>
+
+    <!-- Models Section -->
+    <section class="section">
+        <h2 class="section-title fade-in">Gemini 3.0 核心能力</h2>
+        <div class="models-list">
+            <div class="model-item fade-in">
+                <div class="model-icon">🧠</div>
+                <div class="model-content">
+                    <h3>深度思考架构</h3>
+                    <p>全新推理引擎，实现复杂逻辑链和多步骤推理，在科学、数学及编程等高难度任务上达到业界领先水平</p>
+                </div>
+            </div>
+            <div class="model-item fade-in" style="transition-delay: 0.1s;">
+                <div class="model-icon">🎬</div>
+                <div class="model-content">
+                    <h3>进化的多模态能力</h3>
+                    <p>原生支持文本、图像、视频、音频的无缝理解与生成，配合 Veo 3 实现真正的多媒体对话与创作</p>
+                </div>
+            </div>
+            <div class="model-item fade-in" style="transition-delay: 0.2s;">
+                <div class="model-icon">📚</div>
+                <div class="model-content">
+                    <h3>超长上下文记忆</h3>
+                    <p>上下文窗口扩展至数百万token，能够处理整本书籍、长篇代码库，成为更懂你的智能伙伴</p>
+                </div>
+            </div>
+            <div class="model-item fade-in" style="transition-delay: 0.3s;">
+                <div class="model-icon">🤖</div>
+                <div class="model-content">
+                    <h3>顶级 Agent 能力</h3>
+                    <p>更可靠的自主规划和工具调用，能够独立完成复杂任务，真正成为强大的智能代理</p>
+                </div>
+            </div>
+        </div>
+    </section>
+
+    <!-- Community Section -->
+    <section class="section">
+        <h2 class="section-title fade-in">社区数据</h2>
+        <div class="community-grid">
+            <div class="community-card fade-in">
+                <div class="community-number">2000+</div>
+                <div class="community-label">活跃成员</div>
+            </div>
+            <div class="community-card fade-in" style="transition-delay: 0.1s;">
+                <div class="community-number">10+</div>
+                <div class="community-label">顶尖 AI 模型</div>
+            </div>
+            <div class="community-card fade-in" style="transition-delay: 0.2s;">
+                <div class="community-number">24/7</div>
+                <div class="community-label">全天候服务</div>
+            </div>
+        </div>
+    </section>
+
+    <!-- CTA Section -->
+    <section class="cta-section">
+        <div class="cta-box fade-in">
+            <div class="cta-box-content">
+                <h2>开启您的 AI 之旅</h2>
+                <p>立即加入無限腦域，第一时间体验 Gemini 3.0 及所有前沿 AI 模型</p>
+                <a href="https://discord.gg/24jzeQNEtk" class="btn-primary" target="_blank">🎯 免费加入 Discord 社区</a>
+            </div>
+        </div>
+    </section>
+
+    <!-- Footer -->
+    <footer>
+        <p>© 2025 無限腦域-AI 社区 · 让每个人都能使用最前沿的 AI 技术</p>
+        <p style="margin-top: 10px; font-size: 14px;">
+            <a href="https://discord.gg/24jzeQNEtk" target="_blank" style="color: var(--accent); text-decoration: none;">Discord</a> · 
+            更新时间：2025/10/08
+        </p>
+    </footer>
+
+    <script>
+        // Scroll Header Effect
+        const header = document.getElementById('header');
+        window.addEventListener('scroll', () => {
+            if (window.scrollY > 50) {
+                header.classList.add('scrolled');
+            } else {
+                header.classList.remove('scrolled');
+            }
+        });
+
+        // Intersection Observer for Animations
+        const observerOptions = {
+            threshold: 0.1,
+            rootMargin: '0px 0px -50px 0px'
+        };
+
+        const observer = new IntersectionObserver((entries) => {
+            entries.forEach(entry => {
+                if (entry.isIntersecting) {
+                    entry.target.classList.add('visible');
+                }
+            });
+        }, observerOptions);
+
+        // Observe all fade-in elements
+        document.querySelectorAll('.fade-in, .feature-card, .model-item, .community-card').forEach(el => {
+            observer.observe(el);
+        });
+
+        // Smooth scroll for anchor links
+        document.querySelectorAll('a[href^="#"]').forEach(anchor => {
+            anchor.addEventListener('click', function (e) {
+                e.preventDefault();
+                const target = document.querySelector(this.getAttribute('href'));
+                if (target) {
+                    target.scrollIntoView({
+                        behavior: 'smooth',
+                        block: 'start'
+                    });
+                }
+            });
+        });
+    </script>
+</body>
+</html>
