@@ -14,7 +14,7 @@
 
 ### **官方网站与社区入口**
 
-* **➡️ 官网动态 (实时更新): [点击查看 Gemini 最新进展](https://cdn.superintern.ai/media/chat_history_files/906bfab4-d75c-4da6-aef6-acfc6e271f71/a38c0719-b239-4b67-8fc6-23fe32a0e9db.html)**
+* **➡️ 官网动态 (实时更新): [点击查看 Gemini 最新进展](https://cdn.superintern.ai/media/chat_history_files/906bfab4-d75c-4da6-aef6-acfc6e271f71/a5dab00c-8d8f-4047-89ea-8754395a1da4.html)**
 * **➡️ 免费体验社区 (Discord): [立即加入，抢先体验](https://discord.gg/24jzeQNEtk)**
 
 ---
